@@ -1,15 +1,17 @@
-from flask import Flask, render_template
+from flask import render_template
 
-app = Flask(__name__)
+from config import app
 
-@app.route('/')
+
+@app.route("/")
 def entry_point():
-    return render_template('index.html')
-    # return 'Hello World!'
+    return render_template("index.html")
 
-@app.route('/about')
+
+@app.route("/about")
 def about():
-    return 'this is about page'
+    return "this is about page"
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True, port=8000)
