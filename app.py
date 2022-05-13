@@ -6,7 +6,6 @@ app = Flask(__name__)
 @app.route("/")
 def entry_point():
     return render_template("index.html")
-    # return 'Hello World!'
 
 
 @app.route("/about")
