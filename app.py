@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import render_template
 
-app = Flask(__name__)
+from config import app
 
 
 @app.route("/")
