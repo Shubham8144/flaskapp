@@ -1,7 +1,10 @@
 from flask import render_template, url_for, redirect, flash
 from forms import LoginForm, RegistrationForm
 
-from config import app
+from flask import Flask
+from config import Config
+
+app = Flask(__name__)
 
 
 @app.route("/")
@@ -35,4 +38,4 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=Config.DEBUG)
