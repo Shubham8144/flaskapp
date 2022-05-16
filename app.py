@@ -4,7 +4,7 @@ from config import Config
 from forms import LoginForm, RegistrationForm
 
 app = Flask(__name__)
-
+app.config.from_object("config.Config")
 
 @app.route("/")
 def entry_point():
@@ -38,4 +38,4 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run(debug=Config.DEBUG)
+    app.run()
