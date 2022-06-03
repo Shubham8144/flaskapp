@@ -25,10 +25,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    user_status = db.Column(db.Enum(UserStatusEnum),default=UserStatusEnum.customer,nullable=False)
-    customer = db.relationship('Shipment', backref = 'customer', lazy = 'dynamic', foreign_keys = 'Shipment.customerid')
-    supplier = db.relationship('Shipment', backref = 'supplier', lazy = 'dynamic', foreign_keys = 'Shipment.supplierid')
-    widgets = db.relationship('Widget', secondary = user_config, backref = 'followers')
+    user_status = db.Column(db.Enum(UserStatusEnum),default=UserStatusEnum.customer.value,nullable=False)
+    customer = db.relationship('Shipment', backref='customer', lazy='dynamic', foreign_keys='Shipment.customerid')
+    supplier = db.relationship('Shipment', backref='supplier', lazy='dynamic', foreign_keys='Shipment.supplierid')
+    widgets = db.relationship('Widget', secondary=user_config, backref='followers')
 
     def __repr__(self):
         return f"User('{self.username})"
@@ -51,7 +51,7 @@ class Shipment(db.Model):
     order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     delivery_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.Enum(ShipmentStatusEnum),default=ShipmentStatusEnum.Pending,nullable=False)
-    shipping_address =db.Column(db.String(20))
+    shipping_address = db.Column(db.String(20))
     order_amount = db.Column(db.Integer)
     customerid = db.Column(db.Integer, db.ForeignKey("user.id"))
     supplierid = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -59,9 +59,16 @@ class Shipment(db.Model):
     def __str__(self):
         return f"{self.product_name}"
 
+class WidgetEnum(enum.Enum):
+        Chart = "Chart"
+        Info = "Info"
+        List = "List"
+        Statistic = "Statistic"
+
 
 class Widget(db.Model):
     __tablename__ = "widget"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
+    name = db.Column(db.Enum(WidgetEnum), nullable=False)
+    # name = db.Column(db.String(20), unique=True, nullable=False)
 

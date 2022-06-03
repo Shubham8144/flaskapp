@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% for shipment in shipments %}
+  <article class="media content-section">
+    <table>
+      <div>
+        <div>
+          <thead>
+            <th class="mr-5">Product</th>
+            <th class="mr-5">Order Date</th>
+            <th class="mr-5">Shipping Address</th>
+            <th class="mr-5">Expected Delivery Date</th>
+            <th class="mr-5">Amount</th>
+            {% if request.user.is_customer %}
+            <th class="mr-5">Supplier</th>
+            {% endif %}
+            {% if request.user.is_supplier %}
+            <th class="mr-5">Customer</th>
+            {% endif %}
+            <th class="mr-5">Status</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <h6 class="mr-5">{{ shipment.product_name.name }}</h6>
+              </td>
+              <td>
+                <h6 class="mr-5">{{ shipment.order_date }}</h6>
+              </td>
+              <td>
+                <h6 class="mr-5">{{ shipment.shipping_address }}</h6>
+              <td>
+                <h6 class="mr-5">{{ shipment.delivery_date|date:"F d, Y" }}</h6>
+              <td>
+                <h6 class="mr-5">{{ shipment.order_amount }}</h6>
+              </td>
+              {% if request.user.is_customer %}
+              <td>
+                <h6 class="mr-5">{{ shipment.supplier }}</h6>
+              </td>
+              {% endif %}
+              {% if request.user.is_supplier %}
+              <td>
+                <h6 class="mr-5">{{ shipment.customer }}</h6>
+              </td>
+              {% endif %}
+              <td>
+                <h6 class="mr-5">{{ shipment.status }}</h6>
+              </td>
+        </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</article>
+{% endfor %}
+
+
+
+{% endblock content %}
